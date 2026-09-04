@@ -10,9 +10,7 @@
     "server:build": "npm --prefix server run build",
     "server:test": "npm --prefix server run test",
     "build": "npm run client:build && npm run server:build",
+    "pages:build": "npm --prefix client ci && npm --prefix client run build",
     "test": "npm run server:test"
-  },
-  "dependencies": {
-    "docx": "^9.7.1"
   }
 }
