@@ -1,6 +1,8 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "inference",
-  "pages_build_output_dir": "./client/dist",
-  "compatibility_date": "2026-09-03"
+  "compatibility_date": "2026-09-03",
+  "assets": {
+    "directory": "./client/dist"
+  }
 }
