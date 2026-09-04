@@ -1,0 +1,50 @@
+version: '3.9'
+services:
+  mongodb:
+    image: mongo:7
+    container_name: inference-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: inference
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: inference-api
+    ports:
+      - "8080:8080"
+    env_file:
+      - ${ENV_FILE:-server/.env}
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    restart: unless-stopped
+    command: ["node", "dist/server.js"]
+    volumes:
+      - ./logs:/app/logs
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: inference-worker
+    env_file:
+      - ${ENV_FILE:-server/.env}
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    restart: unless-stopped
+    command: ["node", "dist/workerEntry.js"]
+    volumes:
+      - ./logs:/app/logs
+
+volumes:
+  mongo-data:

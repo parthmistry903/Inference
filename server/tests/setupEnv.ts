@@ -1,0 +1,15 @@
+process.env.NODE_ENV = process.env.NODE_ENV ?? 'test';
+process.env.PORT = process.env.PORT ?? '8080';
+process.env.MONGODB_URI = process.env.MONGODB_URI ?? 'mongodb://127.0.0.1:27017/inference-test';
+process.env.JWT_SECRET = process.env.JWT_SECRET ?? 'test_secret_minimum_32_characters_for_test';
+process.env.JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN ?? '1h';
+process.env.REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET ?? 'test_refresh_secret_minimum_32_chars';
+process.env.REFRESH_TOKEN_EXPIRES_IN = process.env.REFRESH_TOKEN_EXPIRES_IN ?? '7d';
+process.env.AWS_REGION = process.env.AWS_REGION ?? 'us-east-1';
+process.env.AWS_ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY_ID ?? 'test_key';
+process.env.AWS_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY ?? 'test_secret';
+process.env.S3_BUCKET_NAME = process.env.S3_BUCKET_NAME ?? 'test-bucket';
+process.env.SQS_QUEUE_URL = process.env.SQS_QUEUE_URL ?? 'https://sqs.us-east-1.amazonaws.com/123456789012/test-queue';
+process.env.SQS_DLQ_URL = process.env.SQS_DLQ_URL ?? 'https://sqs.us-east-1.amazonaws.com/123456789012/test-dlq';
+process.env.OPENAI_API_KEY = process.env.OPENAI_API_KEY ?? 'sk-test';
+process.env.CLIENT_ORIGIN = process.env.CLIENT_ORIGIN ?? 'http://localhost:5173';

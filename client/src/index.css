@@ -1,0 +1,173 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+  color-scheme: dark;
+  
+  --kinpaku-gold: #B07A3E; 
+  --verdigris-patina: #3A7A72; 
+  
+  
+  --lacquer-deep: #0C0B09;     
+  --lacquer-black: #131110;    
+  --raised-lacquer: #1B1916;  
+  --graphite: #1E1B18;        
+  --graphite-2: #2A2420;      
+
+  
+  --champagne: #EDEAE5;            
+  --champagne-muted: #928D88;      
+  --champagne-dim: #635E59;        
+  --obsidian: #0C0B09;              
+
+  
+  --error: #9A4545;            
+
+  
+  --bg-app: var(--lacquer-deep);
+  --bg-card: var(--lacquer-black);
+  --bg-elevated: var(--raised-lacquer);
+  
+  --border-subtle: var(--graphite);
+  --border-strong: var(--graphite-2);
+
+  --text-primary: var(--champagne);
+  --text-secondary: var(--champagne-muted);
+  --text-muted: var(--champagne-dim);
+}
+
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  body {
+    background-color: var(--bg-app);
+    min-height: 100vh;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    
+    scroll-behavior: smooth;
+  }
+
+  html, #root {
+    background-color: var(--bg-app);
+    color: var(--text-primary);
+  }
+
+  #root { min-height: 100vh; }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+  }
+
+  button, input, textarea, select {
+    font-family: inherit;
+  }
+
+  code, kbd, pre, .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--kinpaku-gold);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover, 
+  input:-webkit-autofill:focus, 
+  input:-webkit-autofill:active {
+      transition: background-color 5000s ease-in-out 0s;
+      -webkit-text-fill-color: var(--text-primary) !important;
+      font-family: 'JetBrains Mono', monospace !important;
+      font-size: 15px !important;
+  }
+  
+  input:-webkit-autofill::first-line {
+      font-family: 'JetBrains Mono', monospace !important;
+      font-size: 15px !important;
+  }
+}
+
+
+@layer utilities {
+  .bg-app { background-color: var(--bg-app) !important; }
+  .bg-card { background-color: var(--bg-card) !important; }
+  .bg-elevated { background-color: var(--bg-elevated) !important; }
+  
+  .border-subtle { border-color: var(--border-subtle) !important; }
+  .border-strong { border-color: var(--border-strong) !important; }
+
+  .text-primary { color: var(--text-primary) !important; }
+  .text-secondary { color: var(--text-secondary) !important; }
+  .text-muted { color: var(--text-muted) !important; }
+  .text-obsidian { color: var(--obsidian) !important; }
+
+  .text-kinpaku { color: var(--kinpaku-gold) !important; }
+  .bg-kinpaku { background-color: var(--kinpaku-gold) !important; }
+  .text-verdigris { color: var(--verdigris-patina) !important; }
+  .bg-verdigris { background-color: var(--verdigris-patina) !important; }
+
+  
+  .glass-panel {
+    background: rgba(11, 11, 11, 0.65);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .glass-card {
+    background: linear-gradient(180deg, rgba(20,20,20,0.8) 0%, rgba(11,11,11,0.8) 100%);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  }
+  
+  .glass-input {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    transition: all 0.2s ease;
+  }
+  .glass-input:focus {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: var(--kinpaku-gold);
+    box-shadow: 0 0 0 1px var(--kinpaku-gold);
+  }
+
+  .label-caps {
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  
+  .font-display {
+    font-family: 'Fraunces', Georgia, serif !important;
+    font-weight: 400;
+  }
+
+  
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--graphite-2) transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar { width: 6px; height: 6px; }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: var(--graphite-2);
+    border-radius: 999px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover { background: var(--champagne-dim); }
+}

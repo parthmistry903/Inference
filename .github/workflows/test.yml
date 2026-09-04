@@ -1,0 +1,52 @@
+name: Test
+on: pull_request
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      mongodb:
+        image: mongo:7
+        ports:
+          - "27017:27017"
+        options: >-
+          --health-cmd "mongosh --eval \"db.adminCommand('ping')\""
+          --health-interval 10s --health-timeout 5s --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: |
+            server/package-lock.json
+            client/package-lock.json
+      - name: Install server dependencies
+        run: cd server && npm ci
+      - name: Install client dependencies
+        run: cd client && npm ci
+      - name: Server TypeScript check
+        run: cd server && npx tsc --noEmit
+      - name: Client build
+        run: cd client && npm run build
+      - name: Run tests with coverage
+        run: cd server && npm run test:coverage
+        env:
+          NODE_ENV: test
+          PORT: 8080
+          MONGODB_URI: mongodb://localhost:27017/inference-test
+          JWT_SECRET: test_secret_minimum_32_characters_for_test
+          JWT_EXPIRES_IN: 1h
+          REFRESH_TOKEN_SECRET: test_refresh_secret_minimum_32_chars
+          REFRESH_TOKEN_EXPIRES_IN: 7d
+          AWS_REGION: us-east-1
+          AWS_ACCESS_KEY_ID: test_key
+          AWS_SECRET_ACCESS_KEY: test_secret
+          S3_BUCKET_NAME: test-bucket
+          SQS_QUEUE_URL: https://sqs.us-east-1.amazonaws.com/123456789012/test-queue
+          SQS_DLQ_URL: https://sqs.us-east-1.amazonaws.com/123456789012/test-dlq
+          OPENAI_API_KEY: sk-test
+          CLIENT_ORIGIN: http://localhost:5173
+      - uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: server/coverage

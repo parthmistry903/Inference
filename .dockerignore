@@ -1,0 +1,16 @@
+node_modules
+server/node_modules
+client/node_modules
+server/dist
+client/dist
+coverage
+logs
+server/logs
+.git
+.env
+.env.*
+server/.env
+client/.env
+seed/resumes
+BUG_AUDIT_INFERENCE.md
+SECOND_PASS_AUDIT.md
