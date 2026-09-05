@@ -4,11 +4,11 @@
  * Three pieces, all of them optional dressing over an app that already works:
  *   • DemoRibbon      — persistent corner pill with a data reset
  *   • DemoNotice      — inline callout above any form the demo refuses
- *   • DemoCredentials — sign-in card with a one-click fill
+ *   • DemoCredentials — one-line note above the pre-filled sign-in form
  */
 
 import { useState } from 'react';
-import { FlaskConical, RotateCcw, Copy, Check } from 'lucide-react';
+import { FlaskConical, RotateCcw } from 'lucide-react';
 import { DEMO_CREDENTIALS } from './demoConfig';
 import { resetDemo } from './store';
 
@@ -62,63 +62,20 @@ export function DemoNotice({ children, className = '' }: DemoNoticeProps) {
   );
 }
 
-interface DemoCredentialsProps {
-  onFill: (email: string, password: string) => void;
-}
-
-export function DemoCredentials({ onFill }: DemoCredentialsProps) {
-  const [copied, setCopied] = useState(false);
-
-  const copy = async () => {
-    try {
-      await navigator.clipboard.writeText(`${DEMO_CREDENTIALS.email} / ${DEMO_CREDENTIALS.password}`);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 1800);
-    } catch {
-      // Clipboard blocked — the credentials are on screen anyway.
-    }
-  };
-
+/**
+ * A single line above the sign-in form. The fields arrive pre-filled, so this
+ * only has to say why, and show the credentials in case someone clears them.
+ */
+export function DemoCredentials() {
   return (
-    <div className="mb-8 rounded-2xl border border-[#2A2420] bg-[#171512] p-5">
-      <div className="mb-3 flex items-center justify-between gap-3">
-        <p className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-[#B07A3E]">
-          <FlaskConical className="h-3.5 w-3.5" />
-          Public demo
-        </p>
-        <button
-          type="button"
-          onClick={copy}
-          className="flex items-center gap-1.5 text-[11px] font-semibold text-[#635E59] transition-colors hover:text-[#EDEAE5]"
-        >
-          {copied ? <Check className="h-3 w-3 text-[#3A7A72]" /> : <Copy className="h-3 w-3" />}
-          {copied ? 'Copied' : 'Copy'}
-        </button>
-      </div>
-
-      <dl className="space-y-1.5 font-mono text-[13px]">
-        <div className="flex items-center justify-between gap-4">
-          <dt className="text-[#635E59]">email</dt>
-          <dd className="truncate text-[#EDEAE5]">{DEMO_CREDENTIALS.email}</dd>
-        </div>
-        <div className="flex items-center justify-between gap-4">
-          <dt className="text-[#635E59]">password</dt>
-          <dd className="text-[#EDEAE5]">{DEMO_CREDENTIALS.password}</dd>
-        </div>
-      </dl>
-
-      <button
-        type="button"
-        onClick={() => onFill(DEMO_CREDENTIALS.email, DEMO_CREDENTIALS.password)}
-        className="mt-4 w-full rounded-xl border border-[#2A2420] bg-[#0C0B09] py-2.5 text-[12px] font-bold uppercase tracking-widest text-[#928D88] transition-colors hover:border-[#B07A3E]/40 hover:text-[#EDEAE5]"
-      >
-        Fill credentials
-      </button>
-
-      <p className="mt-4 text-[12px] leading-relaxed text-[#635E59]">
-        Runs entirely in your browser against a seeded dataset — no backend, no API keys. Screening,
-        decisions and CSV export are live; uploads and record creation are switched off.
-      </p>
+    <div className="mb-7 flex flex-wrap items-center gap-x-3 gap-y-1 rounded-xl border border-[#2A2420] bg-[#171512] px-4 py-3">
+      <span className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-[#B07A3E]">
+        <FlaskConical className="h-3.5 w-3.5" />
+        Public demo
+      </span>
+      <span className="font-mono text-[12.5px] text-[#928D88]">
+        {DEMO_CREDENTIALS.email} · {DEMO_CREDENTIALS.password}
+      </span>
     </div>
   );
 }

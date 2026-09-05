@@ -6,7 +6,8 @@ import { Button } from '../components/ui/Button';
 import { useAuth } from '../hooks/useAuth';
 import { Logo } from '../components/ui/Logo';
 /* DEMO-ONLY:START */
-import { DEMO_MODE } from '../demo/demoConfig';
+import { useEffect } from 'react';
+import { DEMO_CREDENTIALS, DEMO_MODE } from '../demo/demoConfig';
 import { DemoCredentials } from '../demo/DemoUI';
 /* DEMO-ONLY:END */
 
@@ -18,6 +19,14 @@ export default function LoginPage() {
   const [mode, setMode] = useState<'login' | 'forgot'>('login');
 
   const { login } = useAuth();
+
+  /* DEMO-ONLY:START — arrive signed-in-ready; nothing to type. */
+  useEffect(() => {
+    if (!DEMO_MODE) return;
+    setEmail(DEMO_CREDENTIALS.email);
+    setPassword(DEMO_CREDENTIALS.password);
+  }, []);
+  /* DEMO-ONLY:END */
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -123,14 +132,7 @@ export default function LoginPage() {
                 <p className="text-sm text-muted mb-8">Sign in to your workspace.</p>
 
                 {/* DEMO-ONLY:START */}
-                {DEMO_MODE && (
-                  <DemoCredentials
-                    onFill={(demoEmail, demoPassword) => {
-                      setEmail(demoEmail);
-                      setPassword(demoPassword);
-                    }}
-                  />
-                )}
+                {DEMO_MODE && <DemoCredentials />}
                 {/* DEMO-ONLY:END */}
 
                 <form onSubmit={handleLogin} className="space-y-6">
